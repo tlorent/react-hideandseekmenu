@@ -1,0 +1,26 @@
+{
+    "root": true,
+    "env": {
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:import/errors",
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "prettier"
+    ],
+    "plugins": ["@typescript-eslint", "react-hooks", "import"],
+    "rules": {
+        "strict": 0,
+        "no-console": "warn",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "import/order": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+    },
+    "ignorePatterns": "dist"
+}
