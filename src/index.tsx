@@ -1,19 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
 import { debounce } from 'debounce';
+import { RefObject, useEffect, useRef } from 'react';
 
 export interface HideAndSeekMenuOptions {
     offset?: number;
     debounceTime?: number;
+    ref?: RefObject<HTMLElement | null>;
+    transitionDuration?: number;
+    transitionTimingFunction?: string;
 }
 
-const useHideAndSeekMenu = (options?: HideAndSeekMenuOptions): boolean => {
-    const { offset = 90, debounceTime = 25 } = options ?? {};
+const useHideAndSeekMenu = (options?: HideAndSeekMenuOptions): void => {
+    const {
+        offset = 90,
+        debounceTime = 10,
+        ref,
+        transitionDuration = 0.3,
+        transitionTimingFunction = 'ease',
+    } = options ?? {};
 
-    const [isVisible, setIsVisible] = useState(true);
     // Keep and change the previous scroll position in a ref because it's mutable.
     const prevScrollpos = useRef(0);
 
     useEffect(() => {
+        // Set ref styles
+        if (ref?.current) {
+            ref.current.style.position = 'sticky';
+            ref.current.style.top = '0';
+            ref.current.style.transition = `top ${transitionDuration}s ${transitionTimingFunction}`;
+        }
+
         const handleScroll = () => {
             const currentScrollpos = window.pageYOffset;
 
@@ -24,10 +39,14 @@ const useHideAndSeekMenu = (options?: HideAndSeekMenuOptions): boolean => {
                 // that the pageYOffset has decreased for your current position.
                 // You are getting closer to the top of the page, so you are scrolling up.
                 if (prevScrollpos.current > currentScrollpos) {
-                    setIsVisible(true);
+                    if (ref?.current) {
+                        ref.current.style.top = '0';
+                    }
                 } else {
                     // Scrolling down.
-                    setIsVisible(false);
+                    if (ref?.current) {
+                        ref.current.style.top = '-100px';
+                    }
                 }
             }
 
@@ -45,9 +64,15 @@ const useHideAndSeekMenu = (options?: HideAndSeekMenuOptions): boolean => {
                 debounce(handleScroll, debounceTime)
             );
         };
-    }, [debounceTime, offset]);
+    }, [
+        debounceTime,
+        offset,
+        ref,
+        transitionTimingFunction,
+        transitionDuration,
+    ]);
 
-    return isVisible;
+    return;
 };
 
 export { useHideAndSeekMenu };
