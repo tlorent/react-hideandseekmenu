@@ -5,14 +5,10 @@ A simple React hook to hide and show your site's menubar when scrolling.
 
 ![GIF showing react-hideandseekmenu](https://media.giphy.com/media/j1DcokVU0RO8qh7XJ7/giphy.gif)
 
----
-
 ## Features
 🪝React Hook
 
----
-
-### Installation
+## Installation
 
 Install with NPM:
 
@@ -20,9 +16,7 @@ Install with NPM:
 npm install react-hideandseekmenu --save
 ```
 
----
-
-### Usage
+## Usage
 
 #### `useHideAndSeekMenu`
 ```js
@@ -57,7 +51,7 @@ const Navigation = () => {
 
 The hook will then handle the "hide and seek styling" of your navigation bar.
 
-#### Default stylings
+### Default stylings
 
 ```css
 position: sticky;
@@ -65,9 +59,7 @@ transition: top 0.3s ease;
 top: 0;
 ```
 
----
-
-### Options
+## Options
 
 These options can be passed to the `useHideAndSeekMenu` hook:
 
